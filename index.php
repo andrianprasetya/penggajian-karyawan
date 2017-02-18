@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Percobaan</title>
+	<title>Penggajian</title>
 </head>
 <body>
 Andrian Prasetya

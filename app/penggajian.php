@@ -8,8 +8,8 @@ class penggajian extends Model
 {
     protected $table = 'penggajians';
 
-    protected $fillable =['tunjangan_pegawai_id','jumlah_jam_lembur','jumlah_uang_lembur','gaji_pokok','total_gaji','tanggal_pengambilan','status_pengambilan','petugas_pengambilan'];
-    protected $visible =['tunjangan_pegawai_id','jumlah_jam_lembur','jumlah_uang_lembur','gaji_pokok','total_gaji','tanggal_pengambilan','status_pengambilan','petugas_pengambilan'];
+    protected $fillable =['id','tunjangan_pegawai_id','jumlah_jam_lembur','jumlah_uang_lembur','gaji_pokok','total_gaji','tanggal_pengambilan','status_pengambilan','petugas_pengambilan'];
+    protected $visible =['id','tunjangan_pegawai_id','jumlah_jam_lembur','jumlah_uang_lembur','gaji_pokok','total_gaji','tanggal_pengambilan','status_pengambilan','petugas_pengambilan'];
 
     
     public function tunjangan_pegawai (){

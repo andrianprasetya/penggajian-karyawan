@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class pegawai extends Model
 {
     protected $table = 'pegawais';
-
+    
 
     public function golongan (){
     	return $this->belongsTo('App\golongan','golongan_id');

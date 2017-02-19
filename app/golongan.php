@@ -8,8 +8,8 @@ class golongan extends Model
 {
     protected $table = 'golongans';
 
-    protected $fillable =['kode_golongan','nama_golongan','besaran_uang'];
-    protected $visible  =['kode_golongan','nama_golongan','besaran_uang'];
+    protected $fillable =['id','kode_golongan','nama_golongan','besaran_uang'];
+    protected $visible  =['id','kode_golongan','nama_golongan','besaran_uang'];
 
     public function kategori_lembur (){
     	return $this->hasMany('App\kategori_lembur','golongan_id');

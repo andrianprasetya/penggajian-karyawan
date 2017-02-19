@@ -8,8 +8,8 @@ class jabatan extends Model
 {
     protected $table = 'jabatans';
 
-    protected $fillable =['kode_jabatan','nama_jabatan','besaran_uang'];
-    protected $visible =['kode_jabatan','nama_jabatan','besaran_uang'];
+    protected $fillable =['id','kode_jabatan','nama_jabatan','besaran_uang'];
+    protected $visible =['id','kode_jabatan','nama_jabatan','besaran_uang'];
 
     public function kategori_lembur (){
     	return $this->hasOne('App\kategori_lembur','jabatan_id');

@@ -9,7 +9,7 @@ class tunjangan extends Model
     protected $table = 'tunjangans';
 
     protected $fillable =['id','kode_tunjangan','jabatan_id','golongan_id','status','jumlah_anak','besaran_uang'];
-    protected $visible =['kode_lembur_id','pegawai_id','jumlah_jam'];
+    protected $visible =['id','kode_tunjangan','jabatan_id','golongan_id','status','jumlah_anak','besaran_uang'];
 
     public function jabatan (){
     	return $this->belongsTo('App\jabatan','jabatan_id');

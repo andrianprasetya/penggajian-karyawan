@@ -50,14 +50,11 @@ class LemburPegawaiController extends Controller
     public function store(Request $request)
     {  
         $kategori_lembur = kategori_lembur::all();
-        $pegawai = pegawai::with('User')->get();
+        
         $lembur_pegawai = Request::all();
-        $rules = ['kode_lembur_id' => 'required|unique:kategori_lemburs',
-                  'pegawai_id' => 'required',
+        $rules = ['pegawai_id' => 'required',
                   'jumlah_jam' => 'required|numeric'];
-        $sms = ['kode_lembur_id.required' => 'Harus Diisi',
-                'kode_lembur_id.unique' => 'Data Sudah Ada',
-                'pegawai_id.required' => 'Harus Diisi',
+        $sms = ['pegawai_id.required' => 'Harus Diisi',
                 'jumlah_jam.required' => 'Harus Diisi',
                 'jumlah_jam.numeric' => 'Harus Angka'];
         $valid=Validator::make(Input::all(),$rules,$sms);
@@ -74,6 +71,7 @@ class LemburPegawaiController extends Controller
         $pegawai = Pegawai::where('id',$lembur_pegawai['pegawai_id'])->first();
         $check = kategori_lembur::where('jabatan_id',$pegawai->jabatan_id)->where('golongan_id',$pegawai->golongan_id)->first();
         if(!isset($check)){
+            $pegawai = pegawai::with('User')->get();
             $missing_count = true;
             // dd($error_klnf);
             return view('lemburpegawai.create',compact('kategori_lembur','pegawai','missing_count'));

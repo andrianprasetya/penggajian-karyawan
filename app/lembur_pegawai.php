@@ -8,8 +8,8 @@ class lembur_pegawai extends Model
 {
     protected $table = 'lembur_pegawais';
 
-    protected $fillable =['kode_lembur_id','pegawai_id','jumlah_jam'];
-    protected $visible =['kode_lembur_id','pegawai_id','jumlah_jam'];
+    protected $fillable =['id','kode_lembur_id','pegawai_id','jumlah_jam'];
+    protected $visible =['id','kode_lembur_id','pegawai_id','jumlah_jam'];
 
     public function kategori_lembur (){
     	return $this->belongsTo('App\kategori_lembur','kode_lembur_id');

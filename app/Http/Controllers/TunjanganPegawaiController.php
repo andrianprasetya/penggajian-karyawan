@@ -49,10 +49,10 @@ class TunjanganPegawaiController extends Controller
         $tunjangan = tunjangan::all();
         $pegawai = pegawai::with('User')->get();
         $tunjangan_pegawai = Request::all();
-        dd($pegawai);
+        
         $rules = ['kode_tunjangan_id' => 'required',
                   'pegawai_id' => 'required|unique:pegawais'];
-        $sms = ['kode_lembur_id.required' => 'Harus Diisi',
+        $sms = ['kode_tunjangan_id.required' => 'Harus Diisi',
                 'pegawai_id.unique' => 'Data Sudah Ada Tidak Boleh Sama',
                 'pegawai_id.required' => 'Harus Diisi',];
         $valid=Validator::make(Input::all(),$rules,$sms);
@@ -65,10 +65,13 @@ class TunjanganPegawaiController extends Controller
         }
         else
         {
+
+
         alert()->success('Data Tersimpan');
-        tunjangan_pegawai::create($tunjangan_pegawai);
-        return redirect('tunjanganpegawai');
+        $pegawai['pegawai_id'] = $request->get('pegawai_id');
+        tunjangan_pegawai::create($pegawai);
         }
+        return redirect('tunjanganpegawai');
         
     }
 

@@ -68,7 +68,7 @@ class LemburPegawaiController extends Controller
         else
         {
         alert()->success('Data Tersimpan');
-        $pegawai = Pegawai::where('id',$lembur_pegawai['pegawai_id'])->first();
+        $pegawai = pegawai::where('id',$lembur_pegawai['pegawai_id'])->first();
         $check = kategori_lembur::where('jabatan_id',$pegawai->jabatan_id)->where('golongan_id',$pegawai->golongan_id)->first();
         if(!isset($check)){
             $pegawai = pegawai::with('User')->get();

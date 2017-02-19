@@ -51,7 +51,7 @@ class TunjanganPegawaiController extends Controller
         $tunjangan_pegawai = Request::all();
         
         $rules = ['kode_tunjangan_id' => 'required',
-                  'pegawai_id' => 'required|unique:pegawais'];
+                  'pegawai_id' => 'required|unique:tunjangan_pegawais'];
         $sms = ['kode_tunjangan_id.required' => 'Harus Diisi',
                 'pegawai_id.unique' => 'Data Sudah Ada Tidak Boleh Sama',
                 'pegawai_id.required' => 'Harus Diisi',];
@@ -68,8 +68,7 @@ class TunjanganPegawaiController extends Controller
 
 
         alert()->success('Data Tersimpan');
-        $pegawai['pegawai_id'] = $request->get('pegawai_id');
-        tunjangan_pegawai::create($pegawai);
+        tunjangan_pegawai::create($tunjangan_pegawai);
         }
         return redirect('tunjanganpegawai');
         
@@ -117,6 +116,8 @@ class TunjanganPegawaiController extends Controller
      */
     public function destroy($id)
     {
-        //
+        tunjangan_pegawai::find($id)->delete();
+        alert()->success('Data Terhapus');
+        return redirect('tunjanganpegawai');
     }
 }

@@ -83,7 +83,8 @@ class GolonganController extends Controller
      */
     public function edit($id)
     {
-        //
+        $golongan=golongan::find($id);
+        return view('golongan.edit',compact('golongan'));
     }
 
     /**
@@ -95,7 +96,10 @@ class GolonganController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $golonganUpdate=Request::all();
+        $golongan=golongan::find($id);
+        $golongan->update($golonganUpdate);
+        return redirect('golongan');
     }
 
     /**

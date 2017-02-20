@@ -76,6 +76,7 @@ class LemburPegawaiController extends Controller
             // dd($error_klnf);
             return view('lemburpegawai.create',compact('kategori_lembur','pegawai','missing_count'));
         }
+        dd($check->id);
         $lembur_pegawai['kode_lembur_id'] = $check->id;
         
         lembur_pegawai::create($lembur_pegawai);

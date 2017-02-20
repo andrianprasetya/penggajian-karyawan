@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Request;
 use DB;
+use App\lembur_pegawai;
 use App\tunjangan_pegawai;
 use App\pegawai;
 use App\tunjangan;
@@ -44,22 +45,29 @@ class PenggajianController extends Controller
     {
         $tunjangan_pegawai = tunjangan_pegawai::all();
         $penggajian = Request::all();
+        $user = $penggajian['pegawai_id'];
         // $jabatan = DB::select("SELECT jabatans.besaran_uang FROM jabatans");
         // $golongan = DB::select("SELECT golongans.besaran_uang FROM golongans");
         // $pegawai = pegawai::all('user_id')->where('user_id',$user);
         // #Gaji Pokok
         // $pegawai = DB::select("SELECT jabatans.besaran_uang+golongans.besaran_uang From pegawais JOIN golongans ON golongans.id=pegawais.golongan_id JOIN jabatans ON jabatans.id=pegawais.jabatan_id where pegawais.id=$user");
-        // #Jumlah Jam
-        // $lembur_pegawai = DB::select("SELECT SUM(lembur_pegawais.jumlah_jam) FROM lembur_pegawais JOIN pegawais ON pegawais.id=lembur_pegawais.pegawai_id where lembur_pegawais.pegawai_id=$user");
+        #Jumlah Jam
+        $jumlah_jam_lembur = DB::table('lembur_pegawais')
+        ->sum('lembur_pegawais.jumlah_jam');
+        $jumlah_uang_lembur = DB::table('lembur_pegawais')
+        ->select('kategori_lemburs.besaran_uang')
+        ->join('kategori_lemburs','kategori_lemburs.id','=','lembur_pegawais.kode_lembur_id')->first();
         // #Jumlah Uang Lembur
         // $lembur_pegawai2 = DB::select("SELECT SUM(lembur_pegawais.jumlah_jam)*MAX(kategori_lemburs.besaran_uang) FROM lembur_pegawais JOIN kategori_lemburs ON kategori_lemburs.id=lembur_pegawais.kode_lembur_id where lembur_pegawais.pegawai_id=$user");
         // #Kode Tunjangan ID
         // $tunjangan_pegawai = DB::select("SELECT tunjangan_pegawais.id FROM tunjangan_pegawais where tunjangan_pegawais.pegawai_id=$user");
         #Total Gaji 
         // $tunjangan_pegawai2 = DB::select("SELECT tunjangans.besaran_uang FROM tunjangan_pegawais JOIN tunjangans ON tunjangans.id=tunjangan_pegawais.kode_tunjangan_id where tunjangan_pegawais.pegawai_id=$user");
-        $pegawai = pegawai::where('id',$penggajian['pegawai_id'])->first();
-        $tunjangan_pegawai = tunjangan_pegawai::where('kode_tunjangan_id',$pegawai->pegawai_id)->first();
-        $penggajian['kode_tunjangan_id']= $tunjangan_pegawai;
+        $tunjangan_pegawai = tunjangan_pegawai::where('pegawai_id',$penggajian['pegawai_id'])->first();
+        $lembur_pegawai = lembur_pegawai::where('pegawai_id',$penggajian['pegawai_id'])->first();
+        $penggajian['kode_tunjangan_id']= $tunjangan_pegawai->id;
+        $penggajian['jumlah_jam_lembur']= $jumlah_jam_lembur;
+        $penggajian['jumlah_uang_lembur']= $jumlah_uang_lembur;
         dd($penggajian);
         // DB::insert("INSERT INTO penggajians (tunjangan_pegawai_id,jumlah_jam_lembur,jumlah_uang_lembur,gaji_pokok,total_gaji,tanggal_pengambilan,status_pengambilan,petugas_penerima) VALUES ( $tunjangan_pegawai, $lembur_pegawai, $lembur_pegawai2, $pegawai, '10', '1999-04-25', '1', 'Andri')");
         return redirect('penggajian');

@@ -9,7 +9,7 @@
 					<div class="form-group{{ $errors->has('kode_golongan') ? ' has-error' : '' }}">
 							<label for="kode_golongan" class="col-md-4 control-label">Kode Golongan :</label>
 								<div class="col-md-6">
-									<input type="text" name="kode_golongan" placeholder="Kode Golongan" class="form-control" autofocus>
+									<input type="text" name="kode_golongan" title="KG...." placeholder="Kode Golongan" class="form-control" autofocus>
 									@if ($errors->has('kode_golongan'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('kode_golongan') }}</strong>

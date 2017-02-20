@@ -50,10 +50,8 @@ class TunjanganPegawaiController extends Controller
         $pegawai = pegawai::with('User')->get();
         $tunjangan_pegawai = Request::all();
         
-        $rules = ['kode_tunjangan_id' => 'required',
-                  'pegawai_id' => 'required|unique:tunjangan_pegawais'];
-        $sms = ['kode_tunjangan_id.required' => 'Harus Diisi',
-                'pegawai_id.unique' => 'Data Sudah Ada Tidak Boleh Sama',
+        $rules = ['pegawai_id' => 'required|unique:tunjangan_pegawais'];
+        $sms = ['pegawai_id.unique' => 'Data Sudah Ada Tidak Boleh Sama',
                 'pegawai_id.required' => 'Harus Diisi',];
         $valid=Validator::make(Input::all(),$rules,$sms);
         if ($valid->fails()) {
@@ -68,6 +66,15 @@ class TunjanganPegawaiController extends Controller
 
 
         alert()->success('Data Tersimpan');
+        $pegawai = pegawai::where('id',$tunjangan_pegawai['pegawai_id'])->first();
+        $check = tunjangan::where('jabatan_id',$pegawai->jabatan_id)->where('golongan_id',$pegawai->golongan_id)->first();
+        if(!isset($check)){
+            $pegawai = pegawai::with('User')->get();
+            $missing_count = true;
+            // dd($error_klnf);
+            return view('tunjanganpegawai.create',compact('tunjangan_pegawai','pegawai','missing_count'));
+        }
+        $tunjangan_pegawai['kode_tunjangan_id'] = $check->id;
         tunjangan_pegawai::create($tunjangan_pegawai);
         }
         return redirect('tunjanganpegawai');

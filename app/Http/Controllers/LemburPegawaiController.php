@@ -77,7 +77,7 @@ class LemburPegawaiController extends Controller
             return view('lemburpegawai.create',compact('kategori_lembur','pegawai','missing_count'));
         }
         $lembur_pegawai['kode_lembur_id'] = $check->id;
-         // dd($lembur_pegawai);
+        
         lembur_pegawai::create($lembur_pegawai);
         }
         return redirect('lemburpegawai');
@@ -127,6 +127,6 @@ class LemburPegawaiController extends Controller
     {
         lembur_pegawai::find($id)->delete();
         alert()->success('Data Terhapus');
-        return redirect('lembur_pegawai');
+        return redirect('lemburpegawai');
     }
 }
